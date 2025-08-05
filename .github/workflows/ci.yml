@@ -4,12 +4,11 @@ on: [push, pull_request]           # when to run the workflows
                                     # on push events 
                                      # specify branches
                                     # Run on pushes to the 'main' branch 
-
 jobs:
- code-scan:
-  runs-on: ubuntu-latest 
+  code-scan:
+   runs-on: ubuntu-latest 
 
-  steps:
+   steps:
    - name: checkout code 
      uses: actions/checkout@v3
 
@@ -23,7 +22,7 @@ jobs:
      run: mvn clean install -DskipTests 
 
    - name: Run Semgrep scan 
-     uses: returntocrop/semgrep-action@v1 
+     uses: returntocorp/semgrep-action@v1 
      with:
       config: "auto"
 
