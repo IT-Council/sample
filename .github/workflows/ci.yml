@@ -1,17 +1,31 @@
-name: My first workflow # A name for workflow
+name: devsecops pipeline # A name for workflow
 
-on:              # when to run the workflows
-  push:          # on push events 
-    branches:    # specify branches
-        - main    # Run on pushes to the 'main' branch 
+on: [push, pull_request]           # when to run the workflows
+                                    # on push events 
+                                     # specify branches
+                                    # Run on pushes to the 'main' branch 
 
 jobs:
- build:
+ code-scan:
   runs-on: ubuntu-latest 
 
   steps:
    - name: checkout code 
      uses: actions/checkout@v3
 
-   - name: say hello 
-     run: echo "Hello, Devsecops Team!"
+   - name: Set up java
+     uses: actions/setup-java@3 
+     with:
+      java-version: '17'
+      distribution: 'temurin'
+
+   - name: Build the app with maven
+     run: mvn clean install -DskipTests 
+
+   - name: Run Semgrep scan 
+     uses: returntocrop/semgrep-action@v1 
+     with:
+      config: "auto"
+
+
+
