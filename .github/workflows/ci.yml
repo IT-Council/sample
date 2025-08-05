@@ -19,7 +19,7 @@ jobs:
       distribution: 'temurin'
 
    - name: Build the app with maven
-     run: mvn clean install -DskipTests 
+     run: mvn clean install -DskipTests -Dprocess-exec.skip=true
 
    - name: Run Semgrep scan 
      uses: returntocorp/semgrep-action@v1 
